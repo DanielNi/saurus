@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+   <declare-styleable name="CircleView">
+       <attr name="showText" format="boolean" />
+   </declare-styleable>
+   
+   <declare-styleable name="MenuView">
+       <attr name="something" format="boolean" />
+   </declare-styleable>
+   
+   <declare-styleable name="ScoreView">
+       <attr name="another" format="boolean" />
+   </declare-styleable>
+   
+</resources>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:game="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#F2E6D0"
+    android:orientation="vertical" >
+
+    <com.nigu.saurus.ScoreView
+        android:id="@+id/Score"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="25" />
+
+    <!--
+         <GridView
+        android:id="@+id/CircleGrid"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="60"
+        android:gravity="center"
+        android:horizontalSpacing="8dp"
+        android:numColumns="4"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="8dp" >
+    </GridView>
+    -->
+
+    <TableLayout
+        android:id="@+id/CircleTable"
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:layout_weight="60" >
+
+        <TableRow
+            android:id="@+id/Row1"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle1"
+                android:layout_width="0px"
+                android:layout_column="0"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle2"
+                android:layout_width="0px"
+                android:layout_column="1"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle3"
+                android:layout_width="0px"
+                android:layout_column="2"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle4"
+                android:layout_width="0px"
+                android:layout_column="3"
+                android:layout_weight="0.25" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row2"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle5"
+                android:layout_width="0px"
+                android:layout_column="0"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle6"
+                android:layout_width="0px"
+                android:layout_column="1"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle7"
+                android:layout_width="0px"
+                android:layout_column="2"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle8"
+                android:layout_width="0px"
+                android:layout_column="3"
+                android:layout_weight="0.25" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row3"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle9"
+                android:layout_width="0px"
+                android:layout_column="0"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle10"
+                android:layout_width="0px"
+                android:layout_column="1"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle11"
+                android:layout_width="0px"
+                android:layout_column="2"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle12"
+                android:layout_width="0px"
+                android:layout_column="3"
+                android:layout_weight="0.25" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/Row4"
+            android:layout_height="0dp"
+            android:layout_weight="1" >
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle13"
+                android:layout_width="0px"
+                android:layout_column="0"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle14"
+                android:layout_width="0px"
+                android:layout_column="1"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle15"
+                android:layout_width="0px"
+                android:layout_column="2"
+                android:layout_weight="0.25" />
+
+            <com.nigu.saurus.CircleView
+                android:id="@+id/Circle16"
+                android:layout_width="0px"
+                android:layout_column="3"
+                android:layout_weight="0.25" />
+        </TableRow>
+    </TableLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0dip"
+        android:orientation="horizontal"
+        android:layout_weight="15" >
+
+        <com.nigu.saurus.HelpView
+            android:id="@+id/Help"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+        
+        <com.nigu.saurus.MenuView
+            android:id="@+id/Menu"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+        
+        <com.nigu.saurus.HelpView
+            android:id="@+id/Menu2"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+</LinearLayout>
