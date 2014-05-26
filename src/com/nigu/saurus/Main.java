@@ -2,16 +2,14 @@ package com.nigu.saurus;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
@@ -22,8 +20,10 @@ import android.widget.TableRow;
 
 public class Main extends Activity {
 	
-	List<CircleView> circles = new ArrayList<CircleView>();
-	List<CircleView> activated = new ArrayList<CircleView>();
+	private static List<CircleView> circles = new ArrayList<CircleView>();
+	private static List<CircleView> activated = new ArrayList<CircleView>();
+	private static final String HIGH_SCORE = "HighScore";
+	private int highScore;
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -61,16 +61,13 @@ public class Main extends Activity {
         
         setContentView(R.layout.game_layout);
         
-        final MenuView mv = (MenuView) findViewById(R.id.Menu); 
+        final PlayView pv = (PlayView) findViewById(R.id.Menu); 
         final TableLayout tl = (TableLayout) findViewById(R.id.CircleTable);
         final ScoreView sv = (ScoreView) findViewById(R.id.Score);
-        
-//        Handler handler = new Handler(Looper.getMainLooper()) {
-//        	@Override
-//            public void handleMessage(Message inputMessage) {
-//                PhotoTask photoTask = (PhotoTask) inputMessage.obj;
-//            }
-//        };
+
+        SharedPreferences settings = getSharedPreferences(HIGH_SCORE, 0);
+        int best = settings.getInt("best", 0);
+        sv.savedBest(best);
         
         final Handler handler = new Handler() {
         	public void handleMessage(Message msg) {
@@ -82,6 +79,7 @@ public class Main extends Activity {
             		circles.remove(index); // has O(n)...change this?
                 	activated.add(choice);
         		} else if (msg.getData().containsKey("game over")) {
+        			highScore = sv.getBest();
         			for (CircleView cv : activated) {
         				cv.changeToNormal();
         				circles.add(cv);
@@ -90,15 +88,18 @@ public class Main extends Activity {
         			for (CircleView cv : circles) {
         				cv.setEnabled(false);
         			}
-        			sv.invalidate();
-        			mv.refresh();
+        			pv.refresh();
         			
-        		} else if (msg.getData().containsKey("flash")) {
+        		} else if (msg.getData().containsKey("flash1")) {
         			for (CircleView cv : circles) {
         				cv.toggle();
-        				cv.reset();
         			}
-        			mv.setEnabled(true);
+        		} else if (msg.getData().containsKey("flash2")) {
+        			for (CircleView cv : circles) {
+        				cv.toggle();
+        				sv.reset();
+        			}
+        			pv.setEnabled(true);
         		}
         	}
         };
@@ -116,11 +117,10 @@ public class Main extends Activity {
 							return false;
 						} else {
 							if (event.getAction() == MotionEvent.ACTION_DOWN) {
-								cv.increaseScore();
+								sv.increaseScore();
 								cv.changeToNormal();
-								cv.setBest();
+								sv.setBest();
 								
-						    	sv.invalidate();
 						    	circles.add(cv);
 						    	activated.remove(cv);
 								return true;
@@ -135,18 +135,21 @@ public class Main extends Activity {
         	}
         }
         
-        mv.setOnTouchListener(new OnTouchListener() {
+        pv.setOnTouchListener(new OnTouchListener() {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				if (event.getAction() == MotionEvent.ACTION_DOWN) {
-					mv.pressed();
-					mv.setEnabled(false);
+					pv.pressed();
 					new Animate(handler, circles, activated).start();
 					for (CircleView cv : circles) {
 						cv.setEnabled(true);
 					}
 
+					return true;
+				} else if (event.getAction() == MotionEvent.ACTION_UP) {
+					pv.refresh();
+					pv.setEnabled(false);
 					return true;
 				} else {
 					return false;
@@ -170,38 +173,13 @@ public class Main extends Activity {
 //        });
     }
     
-    
-//    public void playGame() {
-//    	ScoreView sv = (ScoreView) findViewById(R.id.Score);
-//    	while (true) {
-//    		if (activated.size() > 3) {
-//    			if (sv.getScore() > sv.getBest()) {
-//    				sv.setBest();
-//    				
-//    				//
-//    				// end the game
-//    				//
-//    			}
-//    			return;
-//    		}
-//    		
-//    		highlightRandom();
-////    		try {
-////				Thread.sleep(500);
-////			} catch (InterruptedException e) {
-////				e.printStackTrace();
-////			}
-//    	}
-//    }
-//    
-//    public void highlightRandom() {
-//    	int size = circles.size();
-//    	int rand = new Random().nextInt(size);
-//    	CircleView choice = circles.get(rand);
-//    	choice.changeToActive();
-//    	
-//    	circles.remove(rand); // has O(n)...change this?
-//    	activated.add(choice);
-//    }
-	
+    @Override
+    protected void onPause() {
+    	super.onPause();
+    	
+    	SharedPreferences settings = getSharedPreferences(HIGH_SCORE, 0);
+        SharedPreferences.Editor editor = settings.edit();
+        editor.putInt("best", highScore);
+        editor.commit();
+    }
 }

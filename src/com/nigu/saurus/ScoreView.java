@@ -11,6 +11,8 @@ import android.view.View;
 public class ScoreView extends View {
 	
 	private final Paint paint = new Paint();
+	private static int score = 0;
+	private static int best;
 
 	public ScoreView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -25,16 +27,13 @@ public class ScoreView extends View {
 		paint.setTextSize(scaledSize);
 		paint.setTextAlign(Align.CENTER);
 		
-		String score = Integer.toString(CircleView.getScore());
-		String best = Integer.toString(CircleView.getBest());
+		String current = Integer.toString(score);
+		String top = Integer.toString(best);
 		
-//		String current = Integer.toString(score);
-//		String top = Integer.toString(best);
-		
-		canvas.drawText("score", x/4, y/3, paint);
-		canvas.drawText(score, x/4, 2*y/3, paint);
-		canvas.drawText("best", 3*x/4, y/3, paint);
-		canvas.drawText(best, 3*x/4, 2*y/3, paint);
+		canvas.drawText("score", x/4, 2*y/5, paint);
+		canvas.drawText(current, x/4, 4*y/5, paint);
+		canvas.drawText("best", 3*x/4, 2*y/5, paint);
+		canvas.drawText(top, 3*x/4, 4*y/5, paint);
 	}
 	
 	@Override
@@ -43,6 +42,36 @@ public class ScoreView extends View {
 		int parentHeight = MeasureSpec.getSize(heightMeasureSpec);
 		
 		setMeasuredDimension(parentWidth, parentHeight);
+	}
+	
+	public void savedBest(int top) {
+		best = top;
+		invalidate();
+	}
+	
+	public void setBest() {
+		if (best < score) {
+			best = score;
+			invalidate();
+		}
+	}
+	
+	public void reset() {
+		score = 0;
+		invalidate();
+	}
+	
+	public static int getScore() {
+		return score;
+	}
+	
+	public void increaseScore() {
+		score++;
+		invalidate();
+	}
+	
+	public int getBest() {
+		return best;
 	}
 
 //	private Paint paint;

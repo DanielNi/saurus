@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.view.View;
 
@@ -22,7 +23,8 @@ public class HelpView extends View {
 		int scaledSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
 		paint.setTextSize(scaledSize);
 		paint.setTextAlign(Align.CENTER);
-		canvas.drawText("?", getWidth() / 2, getHeight() / 2, paint);
+		paint.setTypeface(Typeface.DEFAULT_BOLD);
+		canvas.drawText("?", getWidth() / 2, (int) ((getHeight() / 2) - ((paint.descent() + paint.ascent()) / 2)), paint);
 		
 	}
 	

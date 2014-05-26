@@ -4,7 +4,7 @@
        <attr name="showText" format="boolean" />
    </declare-styleable>
    
-   <declare-styleable name="MenuView">
+   <declare-styleable name="PlayView">
        <attr name="something" format="boolean" />
    </declare-styleable>
    

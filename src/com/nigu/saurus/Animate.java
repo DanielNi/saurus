@@ -33,16 +33,21 @@ public class Animate extends Thread {
 	public void run() {
 		 // Moves the current Thread into the background
         //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
+		try {
+			sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
     	while (true) {
     		if (activated.size() > 3) {
     			gameOver();
-    			flash();
+    			flash("flash1");
     			try {
     				sleep(1000);
     			} catch (InterruptedException e) {
     				e.printStackTrace();
     			}
-    			flash();
+    			flash("flash2");
     			return;
     		}
     		
@@ -85,10 +90,10 @@ public class Animate extends Thread {
     	msg.sendToTarget();
     }
     
-	public void flash() {
+	public void flash(String message) {
 		Message msg = handler.obtainMessage();
 		Bundle b = new Bundle();
-		b.putByte("flash", (byte) 1);
+		b.putByte(message, (byte) 1);
 		msg.setData(b);
 		msg.sendToTarget();
 	}

@@ -156,26 +156,27 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0dip"
-        android:orientation="horizontal"
-        android:layout_weight="15" >
+        android:layout_weight="15"
+        android:orientation="horizontal" >
 
-        <com.nigu.saurus.HelpView
+        <com.nigu.saurus.MenuView
             android:id="@+id/Help"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
-        
-        <com.nigu.saurus.MenuView
+
+        <com.nigu.saurus.PlayView
             android:id="@+id/Menu"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
-        
+
         <com.nigu.saurus.HelpView
             android:id="@+id/Menu2"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
+
     </LinearLayout>
 
 </LinearLayout>
