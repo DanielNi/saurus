@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:game="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/Game"
+    android:background="#F2E6D0"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="#F2E6D0"
     android:orientation="vertical" >
 
     <com.nigu.saurus.ScoreView
@@ -160,19 +161,20 @@
         android:orientation="horizontal" >
 
         <com.nigu.saurus.MenuView
-            android:id="@+id/Help"
+            android:id="@+id/Menu"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="pause" />
 
         <com.nigu.saurus.PlayView
-            android:id="@+id/Menu"
+            android:id="@+id/Play"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1" />
 
         <com.nigu.saurus.HelpView
-            android:id="@+id/Menu2"
+            android:id="@+id/Help"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1" />

@@ -12,8 +12,8 @@ import android.view.ViewGroup;
 public class CircleView extends View {
 	
 	private final Paint paint = new Paint();
-	private static final String NORMAL_COLOR = "#ABDEC9";
-	private static final String ACTIVE_COLOR = "#E8747F";
+	private static String NORMAL_COLOR = "#ABDEC9";
+	private static String ACTIVE_COLOR = "#E8747F";
 	private String color = NORMAL_COLOR;
 	private boolean activated = false;
 	private static int score = 0;
@@ -31,7 +31,7 @@ public class CircleView extends View {
 	public void onDraw(Canvas canvas) {
 		
 		paint.setColor(Color.parseColor(color));
-		canvas.drawCircle(getWidth() / 2, getHeight() / 2, 2 * getHeight() / 5, paint);
+		canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
 	}
 	
 //	@Override
@@ -92,6 +92,13 @@ public class CircleView extends View {
 			color = ACTIVE_COLOR;
 			activated = true;
 		}
+		invalidate();
+	}
+	
+	public void setTheme(String normal, String active) {
+		NORMAL_COLOR = normal;
+		ACTIVE_COLOR = active;
+		color = normal;
 		invalidate();
 	}
 

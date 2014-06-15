@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array
+        name="reset_score">
+        <item
+            >Reset high score</item>
+    </string-array>
+    <string-array
+        name="sound">
+        <item
+            >Sound</item>
+    </string-array>
+    
+    <string-array name="themes_array">
+        <item>Vintage</item>
+        <item>Venus</item>
+        <item>Antique</item>
+        <item>Summer</item>
+        <item>Beach</item>
+    </string-array>
+    
+    <string-array name="reference">
+        <item>background</item>
+        <item>circle_normal</item>
+        <item>circle_active</item>
+        <item>score</item>
+        <item>menu</item>
+    </string-array>
+    
+    <string-array name="vintage">
+        <item>"#F2E6D0"</item>
+        <item>"#ABDEC9"</item>
+        <item>"#E8747F"</item>
+        <item>"#F29D85"</item>
+        <item>"#E3CA94"</item>
+    </string-array>
+    
+    <string-array name="venus">
+        <item>"#C5E3EB"</item>
+        <item>"#8DA693"</item>
+        <item>"#D6B2C2"</item>
+        <item>"#6B636B"</item>
+        <item>"#A9D6CB"</item>
+    </string-array>
+</resources>

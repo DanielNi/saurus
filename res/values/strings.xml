@@ -1,5 +1,7 @@
 <resources>
 
     <string name="app_name">Saurus</string>
+    <string name="okay">Okay</string>
+    <string name="cancel">Cancel</string>
 
 </resources>

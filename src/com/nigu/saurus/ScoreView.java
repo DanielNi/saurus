@@ -13,6 +13,7 @@ public class ScoreView extends View {
 	private final Paint paint = new Paint();
 	private static int score = 0;
 	private static int best;
+	private static String COLOR = "#F29D85";
 
 	public ScoreView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -23,7 +24,7 @@ public class ScoreView extends View {
 		int x = getWidth();
 		int y = getHeight();
 		int scaledSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
-		paint.setColor(Color.parseColor("#F29D85"));
+		paint.setColor(Color.parseColor(COLOR));
 		paint.setTextSize(scaledSize);
 		paint.setTextAlign(Align.CENTER);
 		
@@ -72,6 +73,11 @@ public class ScoreView extends View {
 	
 	public int getBest() {
 		return best;
+	}
+	
+	public void setTheme(String color) {
+		COLOR = color;
+		invalidate();
 	}
 
 //	private Paint paint;

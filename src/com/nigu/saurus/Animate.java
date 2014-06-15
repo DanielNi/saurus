@@ -18,15 +18,19 @@ public class Animate extends Thread {
 	private int EASY;
 	private int NORMAL;
 	private int HARD;
+	private int GET_READY;
+	private int YOU_LOSE;
 	
 	public Animate(Handler handler, List<CircleView> circles, List<CircleView> activated) {
 		this.handler = handler;
 		this.activated = activated;
 		this.circles = circles;
 		
-		EASY = 500;
-		NORMAL = 300;
-		HARD = 200;
+		EASY = 300;
+		NORMAL = 200;
+		HARD = 150;
+		GET_READY = 500;
+		YOU_LOSE = 1000;
 	}
 	
 	@Override
@@ -34,27 +38,26 @@ public class Animate extends Thread {
 		 // Moves the current Thread into the background
         //android.os.Process.setThreadPriority(android.os.Process.THREAD_PRIORITY_BACKGROUND);
 		try {
-			sleep(500);
+			sleep(GET_READY);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
     	while (true) {
     		if (activated.size() > 3) {
     			gameOver();
-    			flash("flash1");
     			try {
-    				sleep(1000);
+    				sleep(YOU_LOSE);
     			} catch (InterruptedException e) {
     				e.printStackTrace();
     			}
-    			flash("flash2");
+    			flash("flash");
     			return;
     		}
     		
     		highlightRandom();
     		
     		try {
-				sleep(HARD);
+				sleep(NORMAL);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -63,7 +66,7 @@ public class Animate extends Thread {
 	
     public void highlightRandom() {
     	int size = circles.size();
-    	int rand = new Random().nextInt(size);
+    	int rand = new Random().nextInt(size - 1); // don't want to highlight the last circle pressed immediately afterwards
     	
     	Message msg = handler.obtainMessage();
     	Bundle b = new Bundle();
