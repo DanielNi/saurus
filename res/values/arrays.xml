@@ -13,10 +13,9 @@
     
     <string-array name="themes_array">
         <item>Vintage</item>
-        <item>Venus</item>
         <item>Antique</item>
-        <item>Summer</item>
-        <item>Beach</item>
+        <item>Rainforest</item>
+        <item>Honeydew</item>
     </string-array>
     
     <string-array name="reference">
@@ -25,6 +24,7 @@
         <item>circle_active</item>
         <item>score</item>
         <item>menu</item>
+        <item>menu_pressed</item>
     </string-array>
     
     <string-array name="vintage">

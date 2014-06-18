@@ -43,7 +43,7 @@ public class Animate extends Thread {
 			e1.printStackTrace();
 		}
     	while (true) {
-    		if (activated.size() > 3) {
+    		if (activated.size() > 2) {
     			gameOver();
     			try {
     				sleep(YOU_LOSE);

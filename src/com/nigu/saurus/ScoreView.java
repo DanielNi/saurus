@@ -23,7 +23,7 @@ public class ScoreView extends View {
 	public void onDraw(Canvas canvas) {
 		int x = getWidth();
 		int y = getHeight();
-		int scaledSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
+		int scaledSize = getResources().getDimensionPixelSize(R.dimen.scoreFontSize);
 		paint.setColor(Color.parseColor(COLOR));
 		paint.setTextSize(scaledSize);
 		paint.setTextAlign(Align.CENTER);

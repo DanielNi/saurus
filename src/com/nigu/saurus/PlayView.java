@@ -18,6 +18,7 @@ public class PlayView extends View {
 	private Path path = new Path();
 	private boolean pressed = false;
 	private int COLOR = 0xE3CA94;
+	private int COLOR_PRESSED = 0x887959;
 	
 	public PlayView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -30,7 +31,7 @@ public class PlayView extends View {
 		int width = getWidth();
 		int height = getHeight();
 		if (pressed) {
-			setPaintColor(0x887959, paint);
+			setPaintColor(COLOR_PRESSED, paint);
 //			Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh_pressed);
 //			canvas.drawBitmap(refresh, (width-refresh.getWidth())/2, (height-refresh.getHeight())/2, paint);
 		} else {
@@ -78,8 +79,9 @@ public class PlayView extends View {
 	    paint.setColorFilter(colorFilter);
 	}
 	
-	public void setTheme(String color) {
+	public void setTheme(String color, String colorPressed) {
 		COLOR = Integer.decode(color);
+		COLOR_PRESSED = Integer.decode(colorPressed);
 		invalidate();
 	}
 	

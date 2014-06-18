@@ -13,20 +13,6 @@
         android:layout_height="0dip"
         android:layout_weight="25" />
 
-    <!--
-         <GridView
-        android:id="@+id/CircleGrid"
-        android:layout_width="fill_parent"
-        android:layout_height="0dip"
-        android:layout_weight="60"
-        android:gravity="center"
-        android:horizontalSpacing="8dp"
-        android:numColumns="4"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="8dp" >
-    </GridView>
-    -->
-
     <TableLayout
         android:id="@+id/CircleTable"
         android:layout_width="fill_parent"
@@ -165,7 +151,7 @@
             android:layout_width="0dip"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            android:onClick="pause" />
+            android:onClick="openOptions" />
 
         <com.nigu.saurus.PlayView
             android:id="@+id/Play"
@@ -177,7 +163,8 @@
             android:id="@+id/Help"
             android:layout_width="0dip"
             android:layout_height="fill_parent"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:onClick="openHelp" />
 
     </LinearLayout>
 

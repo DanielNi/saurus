@@ -10,6 +10,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,15 +36,20 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 	private int CIRCLE_ACTIVE_INDEX = 2;
 	private int SCORE_INDEX = 3;
 	private int MENU_INDEX = 4;
+	private int MENU_PRESSED_INDEX = 5;
 	private int theme;
+	private FragmentManager manager = getSupportFragmentManager();
 	
-	private String[] vintage = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94" };
-	private String[] venus = { "#C5E3EB", "#A9D6CB", "#D6B2C2", "#8DA693", "#6B636B" };
-	private String[] antique = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE" };
-	private String[] summer = { "#EDE1C0", "#97BD8C", "#695F6B", "#738A7C", "#DE9A88" };
-	private String[] beach = { "#FAEFD7", "#AED9D1", "#A63731", "#F7744D", "#FFCB8C" };
+	private OptionsMenu optionsMenu = new OptionsMenu();
+	private HelpMenu helpMenu = new HelpMenu();
 	
-	private String[][] themeColors = { vintage, venus, antique, summer, beach };
+	private String[] vintage = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94", "#887959" };
+//	private String[] venus = { "#C5E3EB", "#A9D6CB", "#D6B2C2", "#8DA693", "#6B636B" };
+	private String[] antique = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
+	private String[] rainforest = { "#EDE1C0", "#97BD8C", "#695F6B", "#738A7C", "#DE9A88", "#855C52" };
+	private String[] honeydew = { "#D3EBE3", "#FFCB8C", "#8BAEA7", "#A63731", "#F7744D", "#94462E" };
+	
+	private String[][] themeColors = { vintage, antique, rainforest, honeydew };
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -170,20 +176,7 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 			}
         	
         });
-        
-//        GridView circles = (GridView) findViewById(R.id.CircleGrid);
-//        circles.setAdapter(new CircleAdapter(this));
-//        circles.setOnTouchListener(new OnTouchListener() {
-//        	
-//        	// Prevent scrolling
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if(event.getAction() == MotionEvent.ACTION_MOVE){
-//                    return true;
-//                }
-//                return false;
-//            }
-//        });
+   
     }
     
     @Override
@@ -197,17 +190,15 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
         editor.commit();
     }
     
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.pause_menu, menu);
-//        return true;
-//    }
-    
-    // Use popup window instead
-    
-    public void pause(View v) {
-        OptionsMenu menu = new OptionsMenu();
-        menu.show(getSupportFragmentManager(), "options");
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        optionsMenu.show(manager, "options");
+        invalidateOptionsMenu();
+        return super.onPrepareOptionsMenu(menu);
+    }
+        
+    public void openOptions(View v) {
+        optionsMenu.show(manager, "options");
     }
     
     public void setColors(int choice, String[][] themeColors) {  
@@ -222,7 +213,7 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
         sv.setTheme(themeColors[choice][SCORE_INDEX]);
         mv.setTheme(themeColors[choice][MENU_INDEX]);
         hv.setTheme(themeColors[choice][MENU_INDEX]);
-        pv.setTheme(themeColors[choice][MENU_INDEX]);
+        pv.setTheme(themeColors[choice][MENU_INDEX], themeColors[choice][MENU_PRESSED_INDEX]);
         
         for (int i = 0; i < rows; i++) {
         	TableRow row = (TableRow) tl.getChildAt(i);
@@ -237,5 +228,9 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 	public void onClick(OptionsMenu dialog, int themeChoice) {
 		theme = themeChoice;
 		setColors(themeChoice, themeColors);
+	}
+	
+	public void openHelp(View v) {
+		helpMenu.show(manager, "help");
 	}
 }

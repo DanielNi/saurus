@@ -21,7 +21,7 @@ public class HelpView extends View {
 	@Override
 	public void onDraw(Canvas canvas) {
 		paint.setColor(Color.parseColor(COLOR));
-		int scaledSize = getResources().getDimensionPixelSize(R.dimen.fontSize);
+		int scaledSize = getResources().getDimensionPixelSize(R.dimen.helpFontSize);
 		paint.setTextSize(scaledSize);
 		paint.setTextAlign(Align.CENTER);
 		paint.setTypeface(Typeface.DEFAULT_BOLD);
