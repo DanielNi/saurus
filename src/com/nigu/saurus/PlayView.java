@@ -9,13 +9,11 @@ import android.graphics.Color;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Paint;
-import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
 public class PlayView extends View {
 	
-	private Path path = new Path();
 	private boolean pressed = false;
 	private int COLOR = 0xE3CA94;
 	private int COLOR_PRESSED = 0x887959;

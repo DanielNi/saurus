@@ -63,12 +63,9 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 
         setContentView(R.layout.game_layout);
         
-        LinearLayout game = (LinearLayout) findViewById(R.id.Game);
         final PlayView pv = (PlayView) findViewById(R.id.Play); 
         final TableLayout tl = (TableLayout) findViewById(R.id.CircleTable);
         final ScoreView sv = (ScoreView) findViewById(R.id.Score);
-        MenuView mv = (MenuView) findViewById(R.id.Menu);
-        HelpView hv = (HelpView) findViewById(R.id.Help);
         
 //        String[][] themeColors = { getResources().getStringArray(R.array.vintage), getResources().getStringArray(R.array.venus) };
         

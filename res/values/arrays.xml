@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string-array
+<!--     <string-array
         name="reset_score">
         <item
             >Reset high score</item>
@@ -9,7 +9,7 @@
         name="sound">
         <item
             >Sound</item>
-    </string-array>
+    </string-array> -->
     
     <string-array name="themes_array">
         <item>Vintage</item>
@@ -18,7 +18,7 @@
         <item>Honeydew</item>
     </string-array>
     
-    <string-array name="reference">
+<!--     <string-array name="reference">
         <item>background</item>
         <item>circle_normal</item>
         <item>circle_active</item>
@@ -41,5 +41,5 @@
         <item>"#D6B2C2"</item>
         <item>"#6B636B"</item>
         <item>"#A9D6CB"</item>
-    </string-array>
+    </string-array> -->
 </resources>

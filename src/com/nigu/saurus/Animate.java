@@ -9,7 +9,6 @@ import android.os.Message;
 
 public class Animate extends Thread {
 	
-	private ScoreView sv;
 	private List<CircleView> activated;
 	private List<CircleView> circles;
 	

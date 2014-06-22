@@ -3,5 +3,8 @@
     <string name="app_name">Saurus</string>
     <string name="okay">Okay</string>
     <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="help">About</string>
+    <string name="help_msg">Saurus is a game of agility and reflexes. Just tap the circles as they change color to increase your score. How long can you last?</string>
 
 </resources>

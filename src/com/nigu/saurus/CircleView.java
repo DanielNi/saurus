@@ -5,9 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 
 public class CircleView extends View {
 	
@@ -16,8 +14,6 @@ public class CircleView extends View {
 	private static String ACTIVE_COLOR = "#E8747F";
 	private String color = NORMAL_COLOR;
 	private boolean activated = false;
-	private static int score = 0;
-	private static int best = 0;
 
 	public CircleView(Context context) {
 		super(context);
