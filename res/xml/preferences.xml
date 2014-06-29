@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <CheckBoxPreference
+        android:key="sound"
+        android:title="@string/sound"
+        android:summary="@string/sound_summary"
+        android:defaultValue="false" />
+    <ListPreference
+        android:key="theme"
+        android:title="@string/themes"
+        android:summary="@string/themes_summary"
+        android:dialogTitle="@string/choose_theme"
+        android:entries="@array/themes_array"
+        android:entryValues="@array/themes_array"
+        android:defaultValue="@string/theme_default" />
+    <com.nigu.saurus.ClearHighScorePreference
+        android:key="clear_best"
+        android:title="Clear high score"
+        android:dialogMessage="Are you sure you want to erase your high score forever?"
+        android:defaultValue="false" />
+</PreferenceScreen>

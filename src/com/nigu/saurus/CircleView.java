@@ -14,6 +14,7 @@ public class CircleView extends View {
 	private static String ACTIVE_COLOR = "#E8747F";
 	private String color = NORMAL_COLOR;
 	private boolean activated = false;
+	private boolean fake = false;
 
 	public CircleView(Context context) {
 		super(context);
@@ -97,5 +98,23 @@ public class CircleView extends View {
 		color = normal;
 		invalidate();
 	}
+	
+	public void changeToFake() {
+		paint.setStyle(Paint.Style.STROKE);
+		paint.setStrokeWidth(10);
+		color = ACTIVE_COLOR;
+		fake = true;
+		invalidate();
+	}
 
+	public void fakeToNormal() {
+		paint.setStyle(Paint.Style.FILL);
+		color = NORMAL_COLOR;
+		fake = false;
+		invalidate();
+	}
+	
+	public boolean fake() {
+		return fake;
+	}
 }

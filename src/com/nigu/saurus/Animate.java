@@ -11,25 +11,28 @@ public class Animate extends Thread {
 	
 	private List<CircleView> activated;
 	private List<CircleView> circles;
-	
+	private ScoreView sv;
 	private Handler handler;
+	private static boolean keepGoing;
 	
-	private int EASY;
-	private int NORMAL;
-	private int HARD;
+	private int SPEED;
 	private int GET_READY;
 	private int YOU_LOSE;
+	
+	private int numCircles;
+	private int fake;
 	
 	public Animate(Handler handler, List<CircleView> circles, List<CircleView> activated) {
 		this.handler = handler;
 		this.activated = activated;
 		this.circles = circles;
+		keepGoing = true;
 		
-		EASY = 300;
-		NORMAL = 200;
-		HARD = 150;
+		SPEED = 250;
 		GET_READY = 500;
 		YOU_LOSE = 1000;
+		
+		numCircles = 0;
 	}
 	
 	@Override
@@ -41,22 +44,17 @@ public class Animate extends Thread {
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
-    	while (true) {
+    	while (keepGoing) {
     		if (activated.size() > 2) {
-    			gameOver();
-    			try {
-    				sleep(YOU_LOSE);
-    			} catch (InterruptedException e) {
-    				e.printStackTrace();
-    			}
-    			flash("flash");
+    			new GameOver(handler).start();
     			return;
     		}
     		
+    		calculateSpeed();
     		highlightRandom();
     		
     		try {
-				sleep(NORMAL);
+				sleep(SPEED);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -66,37 +64,36 @@ public class Animate extends Thread {
     public void highlightRandom() {
     	int size = circles.size();
     	int rand = new Random().nextInt(size - 1); // don't want to highlight the last circle pressed immediately afterwards
-    	
     	Message msg = handler.obtainMessage();
     	Bundle b = new Bundle();
-    	b.putInt("index", rand);
-    	msg.setData(b);
-    	//msg.arg1 = rand;
-    	msg.sendToTarget();
-
-    }
-    
-//    public void checkIfPlaying() {
-//    	Message msg = handler.obtainMessage();
-//    	Bundle b = new Bundle();
-//    	b.putInt("index", rand);
-//    	msg.setData(b);
-//    	handler.handleMessage(msg);
-//    }
-    
-    public void gameOver() {
-    	Message msg = handler.obtainMessage();
-    	Bundle b = new Bundle();
-    	b.putByte("game over", (byte) 1);
+    	if (numCircles > 50 && numCircles % 30 == 0) {
+    		b.putInt("fake", rand);
+        	fake = numCircles;
+    	} else if (numCircles > 50 && fake + 10 == numCircles) {
+    		b.putInt("stop", (byte) 1);
+    	} else {
+        	b.putInt("index", rand);
+    	}
     	msg.setData(b);
     	msg.sendToTarget();
+    	numCircles++;
     }
-    
-	public void flash(String message) {
-		Message msg = handler.obtainMessage();
-		Bundle b = new Bundle();
-		b.putByte(message, (byte) 1);
-		msg.setData(b);
-		msg.sendToTarget();
+	
+	public void calculateSpeed() {
+		if (numCircles < 100) {
+			SPEED = 250;
+		} else if (numCircles < 200) {
+			SPEED = 235;
+		} else if (numCircles < 300) {
+			SPEED = 210;
+		} else if (numCircles < 400) {
+			SPEED = 195;
+		} else if (numCircles < 500) {
+			SPEED = 180;
+		}
+	}
+	
+	public static void end() {
+		keepGoing = false;
 	}
 }

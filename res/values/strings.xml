@@ -5,6 +5,12 @@
     <string name="cancel">Cancel</string>
     <string name="close">Close</string>
     <string name="help">About</string>
+    <string name="sound">Sound effects</string>
+    <string name="sound_summary">Toggle sound effects on or off.</string>
+    <string name="themes">Themes</string>
+    <string name="themes_summary">Choose a theme for your game.</string>
+    <string name="choose_theme">Choose a theme</string>
+    <string name="theme_default">Classic</string>
     <string name="help_msg">Saurus is a game of agility and reflexes. Just tap the circles as they change color to increase your score. How long can you last?</string>
 
 </resources>

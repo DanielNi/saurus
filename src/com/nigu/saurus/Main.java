@@ -1,14 +1,18 @@
 package com.nigu.saurus;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.DialogFragment;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.Menu;
@@ -23,10 +27,11 @@ import android.widget.TableRow;
 
 //Handles all user interaction
 
-public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogListener {
+public class Main extends FragmentActivity {
 	
-	private static List<CircleView> circles = new ArrayList<CircleView>();
-	private static List<CircleView> activated = new ArrayList<CircleView>();
+	private List<CircleView> circles = new ArrayList<CircleView>();
+	private List<CircleView> activated = new ArrayList<CircleView>();
+	private CircleView fakeCircle = null;
 	private static final String HIGH_SCORE = "HighScore";
 	private int highScore;
 	private int rows = 4;
@@ -37,19 +42,100 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 	private int SCORE_INDEX = 3;
 	private int MENU_INDEX = 4;
 	private int MENU_PRESSED_INDEX = 5;
-	private int theme;
+	private String theme;
+	private boolean sound;
 	private FragmentManager manager = getSupportFragmentManager();
+	private SharedPreferences.OnSharedPreferenceChangeListener listener;
+	private SharedPreferences sharedPref;
+	private SoundPool soundPool;
+	private int popId;
 	
-	private OptionsMenu optionsMenu = new OptionsMenu();
 	private HelpMenu helpMenu = new HelpMenu();
 	
-	private String[] vintage = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94", "#887959" };
+	private String[] classic = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94", "#887959" };
 //	private String[] venus = { "#C5E3EB", "#A9D6CB", "#D6B2C2", "#8DA693", "#6B636B" };
-	private String[] antique = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
+	private String[] vintage = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
 	private String[] rainforest = { "#EDE1C0", "#97BD8C", "#695F6B", "#738A7C", "#DE9A88", "#855C52" };
 	private String[] honeydew = { "#D3EBE3", "#FFCB8C", "#8BAEA7", "#A63731", "#F7744D", "#94462E" };
 	
-	private String[][] themeColors = { vintage, antique, rainforest, honeydew };
+	private String[][] themeColors = { classic, vintage, rainforest, honeydew };
+	
+	private LinearLayout game;
+	private PlayView pv;
+	private ScoreView sv;
+	private TableLayout tl;
+	private MenuView mv;
+	private HelpView hv;
+	
+	//
+    // Handle animation thread
+    //
+    static class InnerHandler extends Handler {
+    	private final WeakReference<Main> mFrag;
+    	
+    	InnerHandler(Main main) {
+            mFrag = new WeakReference<Main>(main);
+        }
+    	
+    	public void handleMessage(Message msg) {
+    		Main m = mFrag.get();
+        	if (msg.getData().containsKey("fake")) {
+        		int fake = msg.getData().getInt("fake");
+        		m.fakeCircle = m.circles.get(fake);
+        		m.fakeCircle.changeToFake();
+        		m.circles.remove(fake);
+        		if (m.sound)
+        			m.soundPool.play(m.popId, 1, 1, 1, 0, 1);
+        	} else if (msg.getData().containsKey("stop")) {
+        		m.circles.add(m.fakeCircle);
+        		m.fakeCircle.fakeToNormal();
+        		m.fakeCircle = null;
+        	} else if (msg.getData().containsKey("index")) {
+        		int index = msg.getData().getInt("index");
+        		CircleView choice = m.circles.get(index);
+        		choice.changeToActive();
+        		if (m.sound)
+        			m.soundPool.play(m.popId, 1, 1, 1, 0, 1);
+        		
+        		m.circles.remove(index); // has O(n)...change this?
+            	m.activated.add(choice);
+            	if (msg.getData().containsKey("fake")) {
+            		int fake = msg.getData().getInt("fake");
+            		m.fakeCircle = m.circles.get(fake);
+            		m.fakeCircle.changeToFake();
+            		m.circles.remove(fake);
+            	} else if (msg.getData().containsKey("stop")) {
+            		m.circles.add(m.fakeCircle);
+            		m.fakeCircle.fakeToNormal();
+            		m.fakeCircle = null;
+            	}
+    		} else if (msg.getData().containsKey("game over")) {
+    			m.highScore = m.sv.getBest();
+    			if (m.fakeCircle != null) {
+    				m.circles.add(m.fakeCircle);
+    				m.fakeCircle.fakeToNormal();
+    			}
+    			for (CircleView cv : m.circles) {
+    				cv.changeToActive();
+    				cv.setEnabled(false);
+    			}
+    			for (CircleView cv : m.activated) {
+    				cv.setEnabled(false);
+    				m.circles.add(cv);
+    			}
+    			m.activated.clear();
+    			m.pv.refresh();
+    			
+    		} else if (msg.getData().containsKey("flash")) {
+    			for (CircleView cv : m.circles) {
+    				cv.toggle();
+    			}
+    			m.pv.setEnabled(true);
+    		}
+    	}
+    }
+    
+    InnerHandler gameHandler = new InnerHandler(this);
 	
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -63,21 +149,113 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 
         setContentView(R.layout.game_layout);
         
-        final PlayView pv = (PlayView) findViewById(R.id.Play); 
-        final TableLayout tl = (TableLayout) findViewById(R.id.CircleTable);
-        final ScoreView sv = (ScoreView) findViewById(R.id.Score);
+        game = (LinearLayout) findViewById(R.id.Game);
+        pv = (PlayView) findViewById(R.id.Play); 
+        tl = (TableLayout) findViewById(R.id.CircleTable);
+        sv = (ScoreView) findViewById(R.id.Score);
+        mv = (MenuView) findViewById(R.id.Menu);
+        hv = (HelpView) findViewById(R.id.Help);
         
-//        String[][] themeColors = { getResources().getStringArray(R.array.vintage), getResources().getStringArray(R.array.venus) };
+//      String[][] themeColors = { getResources().getStringArray(R.array.vintage), getResources().getStringArray(R.array.venus) };
         
         sv.reset();
+        
+        PreferenceManager.setDefaultValues(this, R.xml.preferences, false);
+        
+        // Retrieve user settings
+        sharedPref = PreferenceManager.getDefaultSharedPreferences(this);
+        sound = sharedPref.getBoolean(SettingsActivity.SOUND, true);
+        theme = sharedPref.getString(SettingsActivity.THEME, "Classic");
+        setColors(themeToInt(theme), themeColors);
 
-        // Retrieve the high score and theme from memory
+        // Retrieve the high score from memory
         SharedPreferences settings = getSharedPreferences(HIGH_SCORE, 0);
         int best = settings.getInt("best", 0);
         highScore = best;
         sv.savedBest(best);
-        theme = settings.getInt("theme", 0);
-        setColors(theme, themeColors);
+        
+        listener = new SharedPreferences.OnSharedPreferenceChangeListener() {
+        	public void onSharedPreferenceChanged(SharedPreferences prefs, String key) {
+        		if (key.equals(SettingsActivity.SOUND)) {
+        			sound = prefs.getBoolean(key, false);
+        		} else if (key.equals(SettingsActivity.THEME)) {
+        			theme = prefs.getString(key, "Classic");
+        			setColors(themeToInt(theme), themeColors);
+        		} else if (key.equals(SettingsActivity.CLEAR)) {
+        			boolean clear = prefs.getBoolean(key, false);
+        			if (clear) {
+            			sv.clearBest();
+            			sv.reset();
+        			}
+        		}
+        	}
+        };
+        	
+        sharedPref.registerOnSharedPreferenceChangeListener(listener);
+        
+        // Sound effects
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        popId = soundPool.load(this, R.raw.pop, 1);
+        
+        
+        
+//        final Handler handler = new Handler() {
+//        	public void handleMessage(Message msg) {
+//            	if (msg.getData().containsKey("fake")) {
+//            		int fake = msg.getData().getInt("fake");
+//            		fakeCircle = circles.get(fake);
+//            		fakeCircle.changeToFake();
+//            		circles.remove(fake);
+//            		if (sound)
+//            			soundPool.play(popId, 1, 1, 1, 0, 1);
+//            	} else if (msg.getData().containsKey("stop")) {
+//            		circles.add(fakeCircle);
+//            		fakeCircle.fakeToNormal();
+//            		fakeCircle = null;
+//            	} else if (msg.getData().containsKey("index")) {
+//            		int index = msg.getData().getInt("index");
+//            		CircleView choice = circles.get(index);
+//            		choice.changeToActive();
+//            		if (sound)
+//            			soundPool.play(popId, 1, 1, 1, 0, 1);
+//            		
+//            		circles.remove(index); // has O(n)...change this?
+//                	activated.add(choice);
+//                	if (msg.getData().containsKey("fake")) {
+//                		int fake = msg.getData().getInt("fake");
+//                		fakeCircle = circles.get(fake);
+//                		fakeCircle.changeToFake();
+//                		circles.remove(fake);
+//                	} else if (msg.getData().containsKey("stop")) {
+//                		circles.add(fakeCircle);
+//                		fakeCircle.fakeToNormal();
+//                		fakeCircle = null;
+//                	}
+//        		} else if (msg.getData().containsKey("game over")) {
+//        			highScore = sv.getBest();
+//        			if (fakeCircle != null) {
+//        				circles.add(fakeCircle);
+//        				fakeCircle.fakeToNormal();
+//        			}
+//        			for (CircleView cv : circles) {
+//        				cv.changeToActive();
+//        				cv.setEnabled(false);
+//        			}
+//        			for (CircleView cv : activated) {
+//        				cv.setEnabled(false);
+//        				circles.add(cv);
+//        			}
+//        			activated.clear();
+//        			pv.refresh();
+//        			
+//        		} else if (msg.getData().containsKey("flash")) {
+//        			for (CircleView cv : circles) {
+//        				cv.toggle();
+//        			}
+//        			pv.setEnabled(true);
+//        		}
+//        	}
+//        };
                
         //
         // Add touch events for the circles, increasing the score in the process
@@ -91,7 +269,15 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 
 					@Override
 					public boolean onTouch(View v, MotionEvent event) {
-						if (!cv.activated()) {
+						if (cv.fake()) {
+							if (event.getAction() == MotionEvent.ACTION_DOWN) {
+								Animate.end();
+								new GameOver(gameHandler).start();
+								return true;
+							} else {
+								return false;
+							}
+						} else if (!cv.activated()) {
 							return false;
 						} else {
 							if (event.getAction() == MotionEvent.ACTION_DOWN) {
@@ -112,42 +298,8 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
         		});
         	}
         }
+            
         
-        //
-        // Handle animation thread
-        //
-        final Handler handler = new Handler() {
-        	public void handleMessage(Message msg) {
-        		if (msg.getData().containsKey("index")) {
-            		int index = msg.getData().getInt("index");
-            		CircleView choice = circles.get(index);
-            		choice.changeToActive();
-            		
-            		circles.remove(index); // has O(n)...change this?
-                	activated.add(choice);
-        		} else if (msg.getData().containsKey("game over")) {
-        			highScore = sv.getBest();
-        			for (CircleView cv : circles) {
-        				cv.changeToActive();
-        				cv.setEnabled(false);
-        			}
-        			for (CircleView cv : activated) {
-        				cv.setEnabled(false);
-        				circles.add(cv);
-        			}
-        			activated.clear();
-        			pv.refresh();
-        			
-        		} else if (msg.getData().containsKey("flash")) {
-        			for (CircleView cv : circles) {
-        				cv.toggle();
-        			}
-        			pv.setEnabled(true);
-        		}
-        	}
-        };
-        
-    
         //
         // Start the game when refresh is touched
         //
@@ -162,7 +314,7 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
 				} else if (event.getAction() == MotionEvent.ACTION_UP) {
 					pv.refresh();
 					pv.setEnabled(false);
-					new Animate(handler, circles, activated).start();
+					new Animate(gameHandler, circles, activated).start();
 					for (CircleView cv : circles) {
 						cv.setEnabled(true);
 					}
@@ -183,29 +335,22 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
     	SharedPreferences settings = getSharedPreferences(HIGH_SCORE, 0);
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("best", highScore);
-        editor.putInt("theme", theme);
         editor.commit();
+        
+//        sharedPref.unregisterOnSharedPreferenceChangeListener(listener);
     }
     
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        optionsMenu.show(manager, "options");
-        invalidateOptionsMenu();
+    public boolean onPrepareOptionsMenu(Menu menu) {
+    	startActivity(new Intent(this, SettingsActivity.class));
         return super.onPrepareOptionsMenu(menu);
     }
         
     public void openOptions(View v) {
-        optionsMenu.show(manager, "options");
+        startActivity(new Intent(this, SettingsActivity.class));
     }
     
-    public void setColors(int choice, String[][] themeColors) {  
-        LinearLayout game = (LinearLayout) findViewById(R.id.Game);
-        PlayView pv = (PlayView) findViewById(R.id.Play); 
-        TableLayout tl = (TableLayout) findViewById(R.id.CircleTable);
-        ScoreView sv = (ScoreView) findViewById(R.id.Score);
-        MenuView mv = (MenuView) findViewById(R.id.Menu);
-        HelpView hv = (HelpView) findViewById(R.id.Help);
-        
+    public void setColors(int choice, String[][] themeColors) {
         game.setBackgroundColor(Color.parseColor(themeColors[choice][BACKGROUND_INDEX]));
         sv.setTheme(themeColors[choice][SCORE_INDEX]);
         mv.setTheme(themeColors[choice][MENU_INDEX]);
@@ -221,13 +366,25 @@ public class Main extends FragmentActivity implements OptionsMenu.OptionsDialogL
         }
     }
 	
-	@Override
-	public void onClick(OptionsMenu dialog, int themeChoice) {
-		theme = themeChoice;
-		setColors(themeChoice, themeColors);
-	}
-	
 	public void openHelp(View v) {
 		helpMenu.show(manager, "help");
 	}
+	
+	private int themeToInt(String theme) {
+		if (theme.equals("Classic")) {
+			return 0;
+		} else if (theme.equals("Vintage")) {
+			return 1;
+		} else if (theme.equals("Rainforest")) {
+			return 2;
+		} else {
+			return 3;
+		}
+	}
+	
+//	@Override
+//	protected void onResume() {
+//	    super.onResume();
+//	    sharedPref.registerOnSharedPreferenceChangeListener(listener);
+//	}
 }

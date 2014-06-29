@@ -62,7 +62,7 @@ public class ScoreView extends View {
 		invalidate();
 	}
 	
-	public static int getScore() {
+	public int getScore() {
 		return score;
 	}
 	
@@ -77,6 +77,11 @@ public class ScoreView extends View {
 	
 	public void setTheme(String color) {
 		COLOR = color;
+		invalidate();
+	}
+	
+	public void clearBest() {
+		best = 0;
 		invalidate();
 	}
 

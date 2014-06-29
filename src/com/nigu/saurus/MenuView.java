@@ -15,7 +15,6 @@ import android.view.View;
 public class MenuView extends View {
 
 	private static int COLOR = 0xE3CA94;
-//	private static int COLOR = 0xff0000;
 
 	public MenuView(Context context, AttributeSet attrs) {
 		super(context, attrs);
