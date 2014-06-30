@@ -138,6 +138,7 @@
                 android:layout_column="3"
                 android:layout_weight="0.25" />
         </TableRow>
+        
     </TableLayout>
 
     <LinearLayout

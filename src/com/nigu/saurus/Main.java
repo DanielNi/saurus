@@ -49,9 +49,7 @@ public class Main extends FragmentActivity {
 	private SharedPreferences sharedPref;
 	private SoundPool soundPool;
 	private int popId;
-	
-	private HelpMenu helpMenu = new HelpMenu();
-	
+		
 	private String[] classic = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94", "#887959" };
 //	private String[] venus = { "#C5E3EB", "#A9D6CB", "#D6B2C2", "#8DA693", "#6B636B" };
 	private String[] vintage = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
@@ -196,66 +194,6 @@ public class Main extends FragmentActivity {
         // Sound effects
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         popId = soundPool.load(this, R.raw.pop, 1);
-        
-        
-        
-//        final Handler handler = new Handler() {
-//        	public void handleMessage(Message msg) {
-//            	if (msg.getData().containsKey("fake")) {
-//            		int fake = msg.getData().getInt("fake");
-//            		fakeCircle = circles.get(fake);
-//            		fakeCircle.changeToFake();
-//            		circles.remove(fake);
-//            		if (sound)
-//            			soundPool.play(popId, 1, 1, 1, 0, 1);
-//            	} else if (msg.getData().containsKey("stop")) {
-//            		circles.add(fakeCircle);
-//            		fakeCircle.fakeToNormal();
-//            		fakeCircle = null;
-//            	} else if (msg.getData().containsKey("index")) {
-//            		int index = msg.getData().getInt("index");
-//            		CircleView choice = circles.get(index);
-//            		choice.changeToActive();
-//            		if (sound)
-//            			soundPool.play(popId, 1, 1, 1, 0, 1);
-//            		
-//            		circles.remove(index); // has O(n)...change this?
-//                	activated.add(choice);
-//                	if (msg.getData().containsKey("fake")) {
-//                		int fake = msg.getData().getInt("fake");
-//                		fakeCircle = circles.get(fake);
-//                		fakeCircle.changeToFake();
-//                		circles.remove(fake);
-//                	} else if (msg.getData().containsKey("stop")) {
-//                		circles.add(fakeCircle);
-//                		fakeCircle.fakeToNormal();
-//                		fakeCircle = null;
-//                	}
-//        		} else if (msg.getData().containsKey("game over")) {
-//        			highScore = sv.getBest();
-//        			if (fakeCircle != null) {
-//        				circles.add(fakeCircle);
-//        				fakeCircle.fakeToNormal();
-//        			}
-//        			for (CircleView cv : circles) {
-//        				cv.changeToActive();
-//        				cv.setEnabled(false);
-//        			}
-//        			for (CircleView cv : activated) {
-//        				cv.setEnabled(false);
-//        				circles.add(cv);
-//        			}
-//        			activated.clear();
-//        			pv.refresh();
-//        			
-//        		} else if (msg.getData().containsKey("flash")) {
-//        			for (CircleView cv : circles) {
-//        				cv.toggle();
-//        			}
-//        			pv.setEnabled(true);
-//        		}
-//        	}
-//        };
                
         //
         // Add touch events for the circles, increasing the score in the process
@@ -367,7 +305,7 @@ public class Main extends FragmentActivity {
     }
 	
 	public void openHelp(View v) {
-		helpMenu.show(manager, "help");
+		startActivity(new Intent(this, HelpActivity.class));
 	}
 	
 	private int themeToInt(String theme) {
@@ -381,10 +319,4 @@ public class Main extends FragmentActivity {
 			return 3;
 		}
 	}
-	
-//	@Override
-//	protected void onResume() {
-//	    super.onResume();
-//	    sharedPref.registerOnSharedPreferenceChangeListener(listener);
-//	}
 }

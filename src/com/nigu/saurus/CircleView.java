@@ -31,40 +31,6 @@ public class CircleView extends View {
 		canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
 	}
 	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//		if (!activated) {
-//			return false;
-//		} else {
-//			if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//				increaseScore();
-//				changeToNormal();
-//				
-//		    	ViewGroup v = (ViewGroup) this.getParent().getParent().getParent();
-//		    	ScoreView sv = (ScoreView) v.findViewById(R.id.Score);
-//		    	sv.invalidate();
-//				return true;
-//			} else {
-//				return false;
-//			}
-//
-//		}
-////	    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-////	    	increaseScore();
-////	    	changeToActive();
-////
-////	    	ViewGroup v = (ViewGroup) this.getParent().getParent().getParent();
-////	    	ScoreView sv = (ScoreView) v.findViewById(R.id.Score);
-////	    	sv.invalidate();
-////	    	return true;
-////	    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-////	    	changeToNormal();
-////	    	return true;
-////	    } else {
-////	    	return false;
-////	    }
-//	}
-	
 	public void changeToActive() {
 		activated = true;
     	color = ACTIVE_COLOR;
