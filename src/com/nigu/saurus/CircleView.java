@@ -25,8 +25,7 @@ public class CircleView extends View {
 	}
 	
 	@Override
-	public void onDraw(Canvas canvas) {
-		
+	public void onDraw(Canvas canvas) {	
 		paint.setColor(Color.parseColor(color));
 		canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
 	}

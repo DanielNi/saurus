@@ -11,13 +11,11 @@ public class Animate extends Thread {
 	
 	private List<CircleView> activated;
 	private List<CircleView> circles;
-	private ScoreView sv;
 	private Handler handler;
 	private static boolean keepGoing;
 	
 	private int SPEED;
 	private int GET_READY;
-	private int YOU_LOSE;
 	
 	private int numCircles;
 	private int fake;
@@ -30,7 +28,6 @@ public class Animate extends Thread {
 		
 		SPEED = 250;
 		GET_READY = 500;
-		YOU_LOSE = 1000;
 		
 		numCircles = 0;
 	}

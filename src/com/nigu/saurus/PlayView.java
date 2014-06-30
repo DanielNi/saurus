@@ -15,9 +15,12 @@ import android.view.View;
 public class PlayView extends View {
 	
 	private boolean pressed = false;
-	private int COLOR = 0xE3CA94;
-	private int COLOR_PRESSED = 0x887959;
+	private static int COLOR = 0xE3CA94;
+	private static int COLOR_PRESSED = 0x887959;
 	private int color = COLOR;
+	private final Paint paint = new Paint();
+	private Resources res = getResources();
+	private Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh);
 	
 	public PlayView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -25,19 +28,14 @@ public class PlayView extends View {
 	
 	@Override
 	public void onDraw(Canvas canvas) {
-		Resources res = getResources();
-		Paint paint = new Paint();
 		int width = getWidth();
 		int height = getHeight();
 		if (pressed) {
 			color = COLOR_PRESSED;
 //			Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh_pressed);
 //			canvas.drawBitmap(refresh, (width-refresh.getWidth())/2, (height-refresh.getHeight())/2, paint);
-		} else {
-			color = COLOR;
 		}
 		setPaintColor(color, paint);
-		Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh);
 		canvas.drawBitmap(refresh, (width-refresh.getWidth())/2, (height-refresh.getHeight())/2, paint);
 //			path.moveTo((width) / 2 - (width / 6), (height) / 2 - (height / 4));
 //			path.lineTo((width) / 2 - (width / 6), (height) / 2 + (height / 4));

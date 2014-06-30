@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -44,7 +43,6 @@ public class Main extends FragmentActivity {
 	private int MENU_PRESSED_INDEX = 5;
 	private String theme;
 	private boolean sound;
-	private FragmentManager manager = getSupportFragmentManager();
 	private SharedPreferences.OnSharedPreferenceChangeListener listener;
 	private SharedPreferences sharedPref;
 	private SoundPool soundPool;
@@ -274,8 +272,6 @@ public class Main extends FragmentActivity {
         SharedPreferences.Editor editor = settings.edit();
         editor.putInt("best", highScore);
         editor.commit();
-        
-//        sharedPref.unregisterOnSharedPreferenceChangeListener(listener);
     }
     
     @Override
