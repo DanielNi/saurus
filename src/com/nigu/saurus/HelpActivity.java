@@ -24,7 +24,7 @@ public class HelpActivity extends Activity {
 		active.changeToActive();
 		
 		CircleView blank = (CircleView) findViewById(R.id.blank_example);
-		blank.changeToFake();
+		blank.changeToFakeExample();
 	}
 	
 	@Override

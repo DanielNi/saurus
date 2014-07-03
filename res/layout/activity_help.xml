@@ -41,20 +41,11 @@
         <ImageView
             android:layout_width="0px"
             android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:src="@drawable/arrow1"
+            android:layout_weight="0.5"
+            android:src="@drawable/arrow5"
             android:paddingRight="10dp"
             android:paddingBottom="20dp"
-            android:contentDescription="@string/arrow1_desc" />
-
-        <ImageView
-            android:layout_width="0px"
-            android:layout_height="match_parent"
-            android:layout_weight="0.25"
-            android:src="@drawable/arrow2"
-            android:paddingLeft="10dp"
-            android:paddingBottom="20dp"
-            android:contentDescription="@string/arrow2_desc" />
+            android:contentDescription="@string/arrow5_desc" />
 
         <com.nigu.saurus.CircleView
             android:id="@+id/active_example"

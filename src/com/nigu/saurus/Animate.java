@@ -20,6 +20,9 @@ public class Animate extends Thread {
 	private int numCircles;
 	private int fake;
 	
+	private int randFake;
+	private Random rand;
+	
 	public Animate(Handler handler, List<CircleView> circles, List<CircleView> activated) {
 		this.handler = handler;
 		this.activated = activated;
@@ -30,6 +33,9 @@ public class Animate extends Thread {
 		GET_READY = 500;
 		
 		numCircles = 0;
+		
+		rand = new Random();
+		randFake = rand.nextInt(31) + 50;
 	}
 	
 	@Override
@@ -60,16 +66,18 @@ public class Animate extends Thread {
 	
     public void highlightRandom() {
     	int size = circles.size();
-    	int rand = new Random().nextInt(size - 1); // don't want to highlight the last circle pressed immediately afterwards
+    	int randCircle = rand.nextInt(size - 1); // don't want to highlight the last circle pressed immediately afterwards
     	Message msg = handler.obtainMessage();
     	Bundle b = new Bundle();
-    	if (numCircles > 50 && numCircles % 30 == 0) {
-    		b.putInt("fake", rand);
+    	if (numCircles > 50 && numCircles == randFake) {
+    		b.putInt("fake", randCircle);
         	fake = numCircles;
     	} else if (numCircles > 50 && fake + 10 == numCircles) {
     		b.putInt("stop", (byte) 1);
+    		b.putInt("index", randCircle);
+    		randFake = rand.nextInt(31) + numCircles;
     	} else {
-        	b.putInt("index", rand);
+        	b.putInt("index", randCircle);
     	}
     	msg.setData(b);
     	msg.sendToTarget();
@@ -79,14 +87,30 @@ public class Animate extends Thread {
 	public void calculateSpeed() {
 		if (numCircles < 100) {
 			SPEED = 250;
+		} else if (numCircles < 150) {
+			SPEED = 240;
 		} else if (numCircles < 200) {
-			SPEED = 235;
+			SPEED = 230;
+		} else if (numCircles < 250) {
+			SPEED = 220;
 		} else if (numCircles < 300) {
+			SPEED = 215;
+		} else if (numCircles < 350) {
 			SPEED = 210;
 		} else if (numCircles < 400) {
-			SPEED = 195;
+			SPEED = 205;
+		} else if (numCircles < 450) {
+			SPEED = 200;
 		} else if (numCircles < 500) {
-			SPEED = 180;
+			SPEED = 198;
+		} else if (numCircles < 550) {
+			SPEED = 196;
+		} else if (numCircles < 600) {
+			SPEED = 194;
+		} else if (numCircles < 650) {
+			SPEED = 192;
+		} else {
+			SPEED = 190;
 		}
 	}
 	

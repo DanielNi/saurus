@@ -20,7 +20,7 @@ public class PlayView extends View {
 	private int color = COLOR;
 	private final Paint paint = new Paint();
 	private Resources res = getResources();
-	private Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh);
+	private Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.play);
 	
 	public PlayView(Context context, AttributeSet attrs) {
 		super(context, attrs);
@@ -32,8 +32,8 @@ public class PlayView extends View {
 		int height = getHeight();
 		if (pressed) {
 			color = COLOR_PRESSED;
-//			Bitmap refresh = BitmapFactory.decodeResource(res, R.drawable.refresh_pressed);
-//			canvas.drawBitmap(refresh, (width-refresh.getWidth())/2, (height-refresh.getHeight())/2, paint);
+		} else {
+			color = COLOR;
 		}
 		setPaintColor(color, paint);
 		canvas.drawBitmap(refresh, (width-refresh.getWidth())/2, (height-refresh.getHeight())/2, paint);
@@ -83,43 +83,4 @@ public class PlayView extends View {
 		color = COLOR;
 		invalidate();
 	}
-	
-//	@Override
-//	public boolean onTouchEvent(MotionEvent event) {
-//	    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-//	    	color = ACTIVE_COLOR;
-//	    	increaseScore();
-//	    	invalidate();
-//	    	ViewGroup v = (ViewGroup) this.getParent().getParent().getParent();
-//	    	ScoreView sv = (ScoreView) v.findViewById(R.id.Score);
-//	    	sv.invalidate();
-//	    	return true;
-//	    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-//	    	color = NORMAL_COLOR;
-//	    	invalidate();
-//	    	return true;
-//	    } else {
-//	    	return false;
-//	    }
-//	}
-
-//	private Paint paint;
-//	private Path path;
-//	
-//	public MenuView() {
-//		paint = new Paint();
-//		paint.setColor(Color.parseColor("#E3CA94"));
-//		path = new Path();
-//	}
-//	
-//	public void draw(Canvas canvas, int lBound, int rBound, int tBound, int bBound) {
-////		canvas.drawCircle((lBound + rBound) / 2, (tBound + bBound) / 2, 100, paint);
-//		path.moveTo((lBound + rBound) / 2 - 50, (tBound + bBound) / 2 - 50);
-//		path.lineTo((lBound + rBound) / 2 - 50, (tBound + bBound) / 2 + 50);
-//		path.lineTo((lBound + rBound) / 2 + 50, (tBound + bBound) / 2);
-//		path.lineTo((lBound + rBound) / 2 - 50, (tBound + bBound) / 2 - 50);
-//		
-//		canvas.drawPath(path, paint);
-//		
-//	}
 }

@@ -17,8 +17,7 @@
     <string name="dismiss">(Tap to dismiss)</string>
     <string name="play_help">Tap here to play!</string>
     <string name="blank_hint">Don\'t tap the empty circles!</string>
-    <string name="arrow1_desc">Arrow pointing to normal circle</string>
-    <string name="arrow2_desc">Arrow pointing to active circle</string>
+    <string name="arrow5_desc">Arrow pointing from normal circle to active circle</string>
     <string name="arrow3_desc">Arrow pointing to blank circle</string>
     <string name="arrow4_desc">Arrow pointing to play button</string>
 

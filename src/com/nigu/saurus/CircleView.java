@@ -12,9 +12,11 @@ public class CircleView extends View {
 	private final Paint paint = new Paint();
 	private static String NORMAL_COLOR = "#ABDEC9";
 	private static String ACTIVE_COLOR = "#E8747F";
+	private static String BACKGROUND = "#F2E6D0";
 	private String color = NORMAL_COLOR;
 	private boolean activated = false;
 	private boolean fake = false;
+	private boolean example = false;
 
 	public CircleView(Context context) {
 		super(context);
@@ -26,6 +28,15 @@ public class CircleView extends View {
 	
 	@Override
 	public void onDraw(Canvas canvas) {	
+		if (example) {
+			paint.setStyle(Paint.Style.FILL);
+			paint.setColor(Color.parseColor(BACKGROUND));
+			canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
+			paint.setColor(0x88000000);
+			canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
+			paint.setStyle(Paint.Style.STROKE);
+			paint.setStrokeWidth(15);
+		}
 		paint.setColor(Color.parseColor(color));
 		canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
 	}
@@ -46,20 +57,21 @@ public class CircleView extends View {
 		return activated;
 	}
 	
-	public void toggle() {
-		if (activated) {
-			color = NORMAL_COLOR;
-			activated = false;
-		} else {
-			color = ACTIVE_COLOR;
-			activated = true;
-		}
-		invalidate();
-	}
+//	public void toggle() {
+//		if (activated) {
+//			color = NORMAL_COLOR;
+//			activated = false;
+//		} else {
+//			color = ACTIVE_COLOR;
+//			activated = true;
+//		}
+//		invalidate();
+//	}
 	
-	public void setTheme(String normal, String active) {
+	public void setTheme(String normal, String active, String background) {
 		NORMAL_COLOR = normal;
 		ACTIVE_COLOR = active;
+		BACKGROUND = background;
 		color = normal;
 		invalidate();
 	}
@@ -79,7 +91,20 @@ public class CircleView extends View {
 		invalidate();
 	}
 	
+	public void fakeToActive() {
+		paint.setStyle(Paint.Style.FILL);
+		color = ACTIVE_COLOR;
+		fake = false;
+		invalidate();
+	}
+	
 	public boolean fake() {
 		return fake;
+	}
+	
+	public void changeToFakeExample() {
+		color = ACTIVE_COLOR;
+		example = true;
+		invalidate();
 	}
 }
