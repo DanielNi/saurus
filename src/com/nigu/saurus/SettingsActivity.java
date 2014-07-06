@@ -15,6 +15,7 @@ public class SettingsActivity extends PreferenceActivity implements OnSharedPref
 	public static final String SOUND = "sound";
 	public static final String THEME = "theme";
 	public static final String CLEAR = "clear_best";
+//	public static final String RATE = "rate";
 	
     @SuppressLint("NewApi")
 	@Override

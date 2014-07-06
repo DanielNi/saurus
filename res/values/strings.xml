@@ -12,6 +12,8 @@
     <string name="themes_summary">Choose a theme for your game.</string>
     <string name="choose_theme">Choose a theme</string>
     <string name="theme_default">Classic</string>
+    <!-- <string name="rate">Rate this app</string>
+    <string name="rate_summary">This will open the Google Play store.</string> -->
     <string name="help_msg">Quickly tap the circles as they change color!</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="dismiss">(Tap to dismiss)</string>

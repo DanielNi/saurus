@@ -35,7 +35,7 @@ public class CircleView extends View {
 			paint.setColor(0x88000000);
 			canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
 			paint.setStyle(Paint.Style.STROKE);
-			paint.setStrokeWidth(15);
+			paint.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.emptyCircle));
 		}
 		paint.setColor(Color.parseColor(color));
 		canvas.drawCircle(getWidth() / 2, getHeight() / 2, getHeight() / 3, paint);
@@ -78,7 +78,7 @@ public class CircleView extends View {
 	
 	public void changeToFake() {
 		paint.setStyle(Paint.Style.STROKE);
-		paint.setStrokeWidth(10);
+		paint.setStrokeWidth(getResources().getDimensionPixelSize(R.dimen.emptyCircle));
 		color = ACTIVE_COLOR;
 		fake = true;
 		invalidate();

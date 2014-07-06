@@ -3,4 +3,6 @@
     <dimen name="scoreFontSize">35dp</dimen>
     <dimen name="helpFontSize">45dp</dimen>
     <dimen name="textFontSize">17.5dp</dimen>
+    <dimen name="dismissFontSize">12dp</dimen>
+    <dimen name="emptyCircle">3dp</dimen>
 </resources>

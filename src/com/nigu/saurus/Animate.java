@@ -35,7 +35,7 @@ public class Animate extends Thread {
 		numCircles = 0;
 		
 		rand = new Random();
-		randFake = rand.nextInt(31) + 50;
+		randFake = rand.nextInt(35) + 50;
 	}
 	
 	@Override
@@ -75,7 +75,7 @@ public class Animate extends Thread {
     	} else if (numCircles > 50 && fake + 10 == numCircles) {
     		b.putInt("stop", (byte) 1);
     		b.putInt("index", randCircle);
-    		randFake = rand.nextInt(31) + numCircles;
+    		randFake = rand.nextInt(35) + numCircles;
     	} else {
         	b.putInt("index", randCircle);
     	}

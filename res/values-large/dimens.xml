@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="scoreFontSize">52.5dp</dimen>
+    <dimen name="helpFontSize">67.5dp</dimen>
+    <dimen name="textFontSize">26.25dp</dimen>
+    <dimen name="dismissFontSize">18dp</dimen>
+    <dimen name="emptyCircle">4dp</dimen>
+</resources>

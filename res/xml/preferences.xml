@@ -18,4 +18,10 @@
         android:title="Clear high score"
         android:dialogMessage="Are you sure you want to erase your high score forever?"
         android:defaultValue="false" />
+<!--     <Preference
+        android:key="rate"
+        android:title="@string/rate"
+        android:summary="@string/rate_summary" >
+    </Preference> -->
+        
 </PreferenceScreen>

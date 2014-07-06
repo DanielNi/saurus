@@ -3,18 +3,10 @@
     
     <string-array name="themes_array">
         <item>Classic</item>
-        <item>Vintage</item>
         <item>Rainforest</item>
-        <item>Honeydew</item>
-        <item>Cupcake</item>
-    </string-array>
-    
-    <string-array name="themes_values">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
+        <item>Vintage</item>
+        <item>Cotton Candy</item>
+        <item>Wintergreen</item>
     </string-array>
     
 <!--     <string-array name="reference">

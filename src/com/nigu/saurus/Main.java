@@ -4,11 +4,13 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,15 +50,17 @@ public class Main extends FragmentActivity {
 	private SoundPool soundPool;
 	private int popId;
 	private int loseId;
+	private boolean playing = false;
 		
 	private String[] classic = { "#F2E6D0", "#ABDEC9", "#E8747F", "#F29D85", "#E3CA94", "#887959" };
-//	private String[] venus = { "#C5E3EB", "#A9D6CB", "#D6B2C2", "#8DA693", "#6B636B" };
-	private String[] vintage = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
 	private String[] rainforest = { "#EDE1C0", "#97BD8C", "#695F6B", "#738A7C", "#DE9A88", "#855C52" };
-	private String[] honeydew = { "#D3EBE3", "#FFCB8C", "#A63731", "#6F8B86", "#F7744D", "#94462E" };
-	private String[] cupcake = { "#EBDCCA", "#A5DADE", "#F7A1BE", "#62C4C7", "#F7A1BE", "#946172" };
+	private String[] vintage = { "#F2EEE9", "#B9BFBE", "#5E5656", "#797D79", "#B9BFBE", "#5E5656" };
+//	private String[] honeydew = { "#D3EBE3", "#FFCB8C", "#A63731", "#6F8B86", "#6F8B86", "#435350" };
+	private String[] cotton_candy = { "#FFF0DE", "#A5DADE", "#F7A1BE", "#62C4C7", "#F7A1BE", "#946172" };
+//	private String[] fuschia = { "#F0F0BE", "#A88BBA", "#BA6F52", "#3D3C42", "#5E4082", "#5E4082" };
+	private String[] wintergreen = { "#F5DCBC", "#6FB093", "#E89356", "#406E5F", "#AD845C", "#684F37" };
 	
-	private String[][] themeColors = { classic, vintage, rainforest, honeydew, cupcake };
+	private String[][] themeColors = { classic, rainforest, vintage, cotton_candy, wintergreen };
 	
 	private LinearLayout game;
 	private PlayView pv;
@@ -121,7 +125,10 @@ public class Main extends FragmentActivity {
     			for (CircleView cv : m.circles) {
     				cv.changeToNormal();
     			}
+    			m.hv.setEnabled(true);
+    			m.mv.setEnabled(true);
     			m.pv.setEnabled(true);
+    			m.playing = false;
     		}
     	}
     }
@@ -182,8 +189,13 @@ public class Main extends FragmentActivity {
         			if (clear) {
             			sv.clearBest();
             			sv.reset();
+            			highScore = 0;
         			}
-        		}
+        		} 
+//        		else if (key.equals(SettingsActivity.RATE)) {
+//        			Uri uri = Uri.parse("http://www.google.com");
+//        			startActivity(new Intent(Intent.ACTION_VIEW, uri));
+//        		}
         	}
         };
         	
@@ -248,6 +260,9 @@ public class Main extends FragmentActivity {
 					pv.pressed();
     				sv.reset();
 					pv.setEnabled(false);
+					mv.setEnabled(false);
+					hv.setEnabled(false);
+					playing = true;
 					new Animate(gameHandler, circles, activated).start();
 					for (CircleView cv : circles) {
 						cv.setEnabled(true);
@@ -274,6 +289,8 @@ public class Main extends FragmentActivity {
     
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
+    	if (playing)
+    		return false;
     	startActivity(new Intent(this, SettingsActivity.class));
         return super.onPrepareOptionsMenu(menu);
     }
@@ -305,11 +322,11 @@ public class Main extends FragmentActivity {
 	private int themeToInt(String theme) {
 		if (theme.equals("Classic")) {
 			return 0;
-		} else if (theme.equals("Vintage")) {
-			return 1;
 		} else if (theme.equals("Rainforest")) {
+			return 1;
+		} else if (theme.equals("Vintage")) {
 			return 2;
-		} else if (theme.equals("Honeydew")){
+		} else if (theme.equals("Cotton Candy")) {
 			return 3;
 		} else {
 			return 4;
