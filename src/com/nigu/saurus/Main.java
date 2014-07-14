@@ -117,7 +117,6 @@ public class Main extends FragmentActivity {
     			}
     			m.activated.clear();
     			m.highScore = m.sv.getBest();
-    			m.pv.refresh();
     			if (m.sound)
     				m.soundPool.play(m.loseId, 1, 1, 1, 0, 1);
 
@@ -125,6 +124,7 @@ public class Main extends FragmentActivity {
     			for (CircleView cv : m.circles) {
     				cv.changeToNormal();
     			}
+    			m.pv.refresh();
     			m.hv.setEnabled(true);
     			m.mv.setEnabled(true);
     			m.pv.setEnabled(true);
@@ -250,7 +250,7 @@ public class Main extends FragmentActivity {
             
         
         //
-        // Start the game when refresh is touched
+        // Start the game when play is touched
         //
         pv.setOnTouchListener(new OnTouchListener() {
 

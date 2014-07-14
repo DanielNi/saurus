@@ -85,32 +85,36 @@ public class Animate extends Thread {
     }
 	
 	public void calculateSpeed() {
-		if (numCircles < 100) {
-			SPEED = 250;
+		if (numCircles < 50) {
+			SPEED = 275;
+		} else if (numCircles < 100) {
+			SPEED = 265;
 		} else if (numCircles < 150) {
-			SPEED = 240;
+			SPEED = 255;
 		} else if (numCircles < 200) {
-			SPEED = 230;
+			SPEED = 245;
 		} else if (numCircles < 250) {
-			SPEED = 220;
+			SPEED = 235;
 		} else if (numCircles < 300) {
-			SPEED = 215;
+			SPEED = 230;
 		} else if (numCircles < 350) {
-			SPEED = 210;
+			SPEED = 225;
 		} else if (numCircles < 400) {
-			SPEED = 205;
+			SPEED = 220;
 		} else if (numCircles < 450) {
-			SPEED = 200;
+			SPEED = 215;
 		} else if (numCircles < 500) {
-			SPEED = 198;
+			SPEED = 210;
 		} else if (numCircles < 550) {
-			SPEED = 196;
+			SPEED = 208;
 		} else if (numCircles < 600) {
-			SPEED = 194;
+			SPEED = 206;
 		} else if (numCircles < 650) {
-			SPEED = 192;
+			SPEED = 204;
+		} else if (numCircles < 700) {
+			SPEED = 202;
 		} else {
-			SPEED = 190;
+			SPEED = 200;
 		}
 	}
 	

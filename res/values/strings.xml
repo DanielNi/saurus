@@ -14,11 +14,11 @@
     <string name="theme_default">Classic</string>
     <!-- <string name="rate">Rate this app</string>
     <string name="rate_summary">This will open the Google Play store.</string> -->
-    <string name="help_msg">Quickly tap the circles as they change color!</string>
+    <string name="help_msg">Quickly tap the dots as they change color!</string>
     <string name="title_activity_help">HelpActivity</string>
     <string name="dismiss">(Tap to dismiss)</string>
     <string name="play_help">Tap here to play!</string>
-    <string name="blank_hint">Don\'t tap the empty circles!</string>
+    <string name="blank_hint">Don\'t tap the empty dots!</string>
     <string name="arrow5_desc">Arrow pointing from normal circle to active circle</string>
     <string name="arrow3_desc">Arrow pointing to blank circle</string>
     <string name="arrow4_desc">Arrow pointing to play button</string>
