@@ -24,3 +24,9 @@ proguard/
 
 #Log Files
 *.log
+
+#Keystore
+*.keystore
+
+proguard-project.txt
+.classpath
